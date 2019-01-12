@@ -3482,3 +3482,42 @@
     (##type-cast x lo)))
 
 ;;;============================================================================
+
+(define (fact n)
+  (if (= n 1) 1
+    (* n (fact (- n 1)))))
+
+;; Take a list that may be nested. Returns the elemnts, in order
+;; in a non-nested list. 
+
+(define (flatten l)
+  (cond
+    ((null? l) '())
+    ((not (pair? l)) (list l))
+    ((pair? l) (append (flatten (car l)) (flatten (cdr l))))))
+        
+;; Returns l with only the elements that match the predicate.
+
+(define (filter pred l)
+  (cond
+    ((null? l) '())
+    ((pred (car l)) (cons (car l) (filter pred (cdr l))))
+    (else (filter pred (cdr l)))))
+
+;; map the operator op to each nth element of each orgument.
+;; The number of arguments must match the number of arguments that
+;; op expects.
+
+(define (multimap op . args)
+   (if (not (null? (filter null? args))) '()
+     (cons
+       (apply op (map car args))
+       (apply multimap (append (list op) (map cdr args))))))
+               
+;; Evaluate and prient each argument of p. If p contains lists,
+;; evaluate and print each argument individually.
+
+(define (p . args)
+   (for-each (lambda (arg)
+     (display arg)) (flatten args)))
+

@@ -555,7 +555,7 @@
 (define (compiler-version) 409001) ;; 100000*major + 1000*minor + revision
 
 (define compiler-version-string-prefix "v")
-(define compiler-version-string-suffix "")
+(define compiler-version-string-suffix "Emmanuel Eytan")
 
 (define (compiler-version-string)
   (let* ((version
